@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFCCCCCC"
+    android:orientation="vertical"
+    tools:context=".ClassificationActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ClassifyButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Klasyfikuj" />
+
+        <Button
+            android:id="@+id/AddButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Dodaj" />
+
+        <EditText
+            android:id="@+id/DigitEditText"
+            android:layout_width="20dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:background="#FFFF8800"
+            android:ems="10"
+            android:inputType="numberSigned"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <com.example.student.classification.DrawingView
+        android:id="@+id/drawing"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_weight="1"
+        android:background="#FFFFFFFF" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/TrainButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Ucz Klasyfikator" />
+
+        <Button
+            android:id="@+id/CleanButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Wyczyść" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
