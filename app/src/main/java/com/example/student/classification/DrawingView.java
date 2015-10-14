@@ -86,7 +86,7 @@ public class DrawingView extends View {
         return true;
     }
 
-    public List <Point> getPointList (){
+    public List <Point> getPoints (){
         return pointList;
     }
 

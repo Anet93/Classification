@@ -1,14 +1,21 @@
 package com.example.student.classification;
 
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -19,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button classifyButton;
     private Button trainButton;
     private EditText digitEditText;
+    private String dataTrainName;
 
 
     @Override
@@ -29,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void init() {
+        dataTrainName = "trainData.txt";
         drawView = (DrawingView) findViewById(R.id.drawing);
         cleanButton = (Button) findViewById(R.id.CleanButton);
         cleanButton.setOnClickListener(this);
@@ -48,9 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawView.cleanDrawing();
                 break;
             case R.id.AddButton:
-                if(drawView.getPointList().equals(null)){
-                    Snackbar.make(view, "braku rysunku.", Snackbar.LENGTH_LONG).show();
-                }
+                add();
                 break;
             case R.id.ClassifyButton:
                 break;
@@ -58,5 +65,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+
+    public void add() {
+        if (digitEditText.getText().toString().equals("")) {
+            showAlertDialog("Bład", "Nie podano cyfry do dodania");
+        } else if (drawView.getPoints().size() == 0) {
+            showAlertDialog("Bład", "Obrazek nie został narysowany");
+        } else {
+            Features features = new Features(drawView.getPoints());
+            List<Double> featureValues = features.calculateFeatures();
+            drawView.cleanDrawing();
+            writeToFile(featureValues);
+
+        }
+    }
+
+    public void writeToFile(List<Double> featureValues) {
+        try {
+            FileOutputStream fileout = openFileOutput(dataTrainName, MODE_PRIVATE | MODE_APPEND);
+            OutputStreamWriter outputWriter = new OutputStreamWriter(fileout);
+            for (int i = 0; i < featureValues.size(); i++) {
+                outputWriter.write(featureValues.get(i).toString());
+                outputWriter.write(",");
+                Log.d("writeToFile ", "featureValues " + featureValues.get(i).toString());
+            }
+            outputWriter.write(digitEditText.getText().toString());
+            Log.d("uczenie ", "cyfra " + digitEditText.getText().toString());
+            outputWriter.write("\n");
+            outputWriter.close();
+        } catch (Exception e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+    }
+
+    public void showAlertDialog(String title, String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setMessage(message).setCancelable(true).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clean_data:
+                clean();
+                return true;
+            case R.id.exit:
+                super.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void clean() {
+        File file = this.getFileStreamPath(dataTrainName);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
 }
+
+
 

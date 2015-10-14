@@ -16,18 +16,18 @@
         <dex dex="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\pre-dexed\debug\classes-f74806468c216f6ec6aa4b38923f6c3ac2199e3c.jar" />
     </item>
     <item
-        jar="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\exploded-aar\com.android.support\design\22.2.1\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1821601ddbec5ff125653097812823388700af74">
-        <dex dex="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\pre-dexed\debug\classes-57af7f819eb6e82adb81fabbb9702851bc6c1341.jar" />
-    </item>
-    <item
         jar="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
         <dex dex="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\pre-dexed\debug\classes-4adafc228de5e0334349f7f5603794d918827db1.jar" />
+    </item>
+    <item
+        jar="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\exploded-aar\com.android.support\design\22.2.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="C:\Users\student.115-01\Downloads\Classification\app\build\intermediates\pre-dexed\debug\classes-57af7f819eb6e82adb81fabbb9702851bc6c1341.jar" />
     </item>
     <item
         jar="C:\Users\student.115-01\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
