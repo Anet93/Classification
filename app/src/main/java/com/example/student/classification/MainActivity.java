@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
@@ -27,12 +28,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button trainButton;
     private EditText digitEditText;
     private String dataTrainName;
+    private NaiveBayes nb;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nb = new NaiveBayes();
         init();
     }
 
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 add();
                 break;
             case R.id.ClassifyButton:
+                classify();
+                break;
+            case R.id.TrainButton:
+                train();
                 break;
             default:
                 break;
@@ -80,6 +87,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
+    public void train() {
+        try {
+            File file = this.getFileStreamPath(dataTrainName);
+            if (file.exists()) {
+                InputStream inputStream = openFileInput(dataTrainName);
+                DataCollection data = new DataCollection();
+                data.build(inputStream);
+                if (data.numberOfClasses() > 1) {
+                    nb.buildClassifier(data);
+                    showAlertDialog("Sukces", "Model został poprawnie wyuczony");
+                } else {
+                    showAlertDialog("Bład", "Narysuj co najmniej dwie różne cyfry aby wyuczyć model");
+                }
+                inputStream.close();
+            } else {
+                showAlertDialog("Bład", "Brak pliku z danymi uczącymi");
+            }
+        } catch (Exception e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+    }
+
+    public void classify(){
+        if (nb.isTrained()) {
+            Features features = new Features(drawView.getPoints());
+            double predicted = nb.classifyInstance(features);
+            digitEditText.setText(Integer.toString((int) predicted));
+        } else {
+            showAlertDialog("Bład", "Klasyfikator nie został wyuczony");
+        }
+    }
+
 
     public void writeToFile(List<Double> featureValues) {
         try {
