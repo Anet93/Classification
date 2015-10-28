@@ -8,9 +8,11 @@ import java.util.List;
  */
 public class Features {
     private List<Point> points;
+    private int strokes;
 
-    public Features(List<Point> points) {
+    public Features(List<Point> points, int strokes) {
         this.points = points;
+        this.strokes = strokes;
     }
 
     public double getFirstLastDist() {
@@ -62,6 +64,8 @@ public class Features {
         //Angle First - Last Y
         double angleFLY = getFirstLastAngleY();
         features.add(angleFLY);
+        //
+        features.add(Double.valueOf(strokes));
 
         return features;
     }

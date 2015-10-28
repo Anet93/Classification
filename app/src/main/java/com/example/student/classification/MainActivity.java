@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText digitEditText;
     private String dataTrainName;
     private NaiveBayes nb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (drawView.getPoints().size() == 0) {
             showAlertDialog("Bład", "Obrazek nie został narysowany");
         } else {
-            Features features = new Features(drawView.getPoints());
+            Features features = new Features(drawView.getPoints(), drawView.getStrokes());
             List<Double> featureValues = features.calculateFeatures();
             drawView.cleanDrawing();
             writeToFile(featureValues);
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void classify(){
         if (nb.isTrained()) {
-            Features features = new Features(drawView.getPoints());
+            Features features = new Features(drawView.getPoints(), drawView.getStrokes());
             double predicted = nb.classifyInstance(features);
             digitEditText.setText(Integer.toString((int) predicted));
         } else {

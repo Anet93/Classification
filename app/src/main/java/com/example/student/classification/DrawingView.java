@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,6 +25,8 @@ public class DrawingView extends View {
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
     private List<Point> pointList;
+    public static String TAG = "TouchEvent";
+    private int strokes = 0;
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -61,6 +64,7 @@ public class DrawingView extends View {
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
         pointList = new ArrayList<>();
+        strokes = 0;
     }
 
     @Override
@@ -71,13 +75,16 @@ public class DrawingView extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 drawPath.moveTo(touchX, touchY);
+                Log.i(TAG, "ACTION_DOWN: x = "+touchX +" y = " +touchY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 drawPath.lineTo(touchX, touchY);
+                Log.i(TAG, "ACTION_MOVE: x = "+touchX +" y = " +touchY);
                 break;
             case MotionEvent.ACTION_UP:
                 drawCanvas.drawPath(drawPath, drawPaint);
                 drawPath.reset();
+                strokes++;
                 break;
             default:
                 return false;
@@ -88,6 +95,10 @@ public class DrawingView extends View {
 
     public List <Point> getPoints (){
         return pointList;
+    }
+
+    public int getStrokes(){
+        return strokes;
     }
 
 }
