@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button classifyButton;
     private Button trainButton;
     private EditText digitEditText;
+    private TextView resultText;
     private String dataTrainName;
     private NaiveBayes nb;
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trainButton = (Button) findViewById(R.id.TrainButton);
         trainButton.setOnClickListener(this);
         digitEditText = (EditText) findViewById(R.id.DigitEditText);
+        resultText = (TextView) findViewById(R.id.ResultText);
     }
 
     @Override
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.CleanButton:
                 drawView.cleanDrawing();
+                resultText.setText("");
                 break;
             case R.id.AddButton:
                 add();
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (nb.isTrained()) {
             Features features = new Features(drawView.getPoints(), drawView.getStrokes());
             double predicted = nb.classifyInstance(features);
-            digitEditText.setText(Integer.toString((int) predicted));
+            resultText.setText(Integer.toString((int) predicted));
         } else {
             showAlertDialog("Bład", "Klasyfikator nie został wyuczony");
         }

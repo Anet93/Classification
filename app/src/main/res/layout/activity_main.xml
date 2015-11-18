@@ -19,6 +19,15 @@
             android:layout_margin="10dp"
             android:text="Klasyfikuj" />
 
+        <TextView
+            android:id="@+id/ResultText"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:background="#00CCCC"
+            android:textSize="30sp"/>
+
         <Button
             android:id="@+id/AddButton"
             android:layout_width="fill_parent"
@@ -28,13 +37,14 @@
 
         <EditText
             android:id="@+id/DigitEditText"
-            android:layout_width="20dp"
+            android:layout_width="30dp"
             android:layout_height="fill_parent"
             android:layout_margin="10dp"
             android:background="#FFFF8800"
             android:ems="10"
             android:inputType="numberSigned"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
+
     </LinearLayout>
 
     <com.example.student.classification.DrawingView
